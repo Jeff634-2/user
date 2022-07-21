@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"github.com/Jeff634-2/user/domain/repository"
-	service2 "github.com/Jeff634-2/user/domain/service"
 	"github.com/Jeff634-2/user/handler"
 	user "github.com/Jeff634-2/user/proto"
 	"github.com/jinzhu/gorm"
@@ -12,6 +11,8 @@ import (
 )
 
 func main() {
+	//注册consul
+
 	// 服务参数设置
 	srv := micro.NewService(
 		micro.Name("go.micro.service.user"),
@@ -36,10 +37,10 @@ func main() {
 	db.SingularTable(true)
 
 	// 创建服务实例
-	userDataService := service2.NewUserDataService(repository.NewUserRepository(db))
+	//userDataService := service2.NewUserDataService(repository.NewUserRepository(db))
 
 	// 注册handler
-	err = user.RegisterUserHandler(srv.Server(), &handler.User{UserDataService: userDataService})
+	err = user.RegisterUserHandler(srv.Server(), new(handler.User))
 
 	if err != nil {
 		fmt.Println(err)

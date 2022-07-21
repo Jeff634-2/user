@@ -2,6 +2,7 @@ package handler
 
 import (
 	"context"
+	"fmt"
 	"github.com/Jeff634-2/user/domain/model"
 	"github.com/Jeff634-2/user/domain/service"
 	user "github.com/Jeff634-2/user/proto"
@@ -13,11 +14,38 @@ type User struct {
 
 // 注册
 func (u *User) Register(ctx context.Context, userRegisterRequest *user.UserRegisterRequest, userRegisterResponse *user.UserRegisterResponse) error {
-	userRegister := &model.User{
+
+	//userRegister := &model.User{}
+	////var userRegister model.User
+	////if err := common.SwapTo(userRegisterRequest, userRegister); err != nil {
+	////	return err
+	////}
+	//
+	//dataByte, err := json.Marshal(userRegisterRequest)
+	//if err != nil {
+	//	return err
+	//}
+	//err = json.Unmarshal(dataByte, userRegister)
+	//if err != nil {
+	//	return err
+	//}
+	//
+	//_, err = u.UserDataService.AddUser(userRegister)
+	//if err != nil {
+	//	return err
+	//}
+	//userRegisterResponse.Message = "添加成功"
+	//return nil
+
+	var userRegister *model.User
+	userRegister = new(model.User)
+	//userRegister = make(model.User, 0)
+	userRegister = &model.User{
 		UserName:     userRegisterRequest.UserName,
 		FirstName:    userRegisterRequest.FirstName,
 		HashPassword: userRegisterRequest.Pwd,
 	}
+	fmt.Println(userRegister)
 	_, err := u.UserDataService.AddUser(userRegister)
 	if err != nil {
 		return err
